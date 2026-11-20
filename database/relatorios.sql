@@ -1,0 +1,85 @@
+-- =============================================================================
+-- Relatório 1: Desempenho geral e médias por avaliação
+-- Retorna quantidade de participantes, nota média, maior e menor nota,
+-- além da taxa de adesão dos alunos atribuídos.
+-- =============================================================================
+SELECT 
+    a.id_avaliacao,
+    a.titulo AS avaliacao,
+    prof.nome AS professor_responsavel,
+    COUNT(aa.data_realizacao) AS total_respostas,
+    ROUND(AVG(aa.nota_total), 2) AS media_nota,
+    MAX(aa.nota_total) AS maior_nota,
+    MIN(aa.nota_total) AS menor_nota,
+    ROUND(
+        COUNT(aa.data_realizacao) * 100.0 / 
+        (SELECT COUNT(*) FROM AvaliacaoAluno sub WHERE sub.id_avaliacao = a.id_avaliacao), 
+        1
+    ) AS taxa_adesao_pct
+FROM Avaliacao a
+INNER JOIN Usuario prof ON a.id_professor = prof.id_usuario
+INNER JOIN AvaliacaoAluno aa ON a.id_avaliacao = aa.id_avaliacao
+WHERE aa.data_realizacao IS NOT NULL
+  AND a.data_inicio >= '2026-01-01'
+GROUP BY a.id_avaliacao, a.titulo, prof.nome
+HAVING COUNT(aa.data_realizacao) >= 1
+ORDER BY media_nota DESC;
+
+
+-- =============================================================================
+-- Relatório 2: Alunos pendentes por avaliação
+-- Identifica alunos inscritos que ainda não entregaram a prova dentro do prazo.
+-- =============================================================================
+SELECT 
+    a.id_avaliacao,
+    a.titulo AS avaliacao,
+    a.data_fim AS prazo_limite,
+    u.id_usuario AS id_aluno,
+    u.nome AS nome_aluno,
+    u.email AS email_aluno,
+    'PENDENTE' AS status_resposta
+FROM Avaliacao a
+INNER JOIN AvaliacaoAluno aa ON a.id_avaliacao = aa.id_avaliacao
+INNER JOIN Usuario u ON aa.id_aluno = u.id_usuario
+LEFT JOIN RespostaQuestao rq ON aa.id_avaliacao = rq.id_avaliacao AND aa.id_aluno = rq.id_aluno
+WHERE aa.data_realizacao IS NULL
+  AND rq.id_questao IS NULL
+  AND (a.titulo LIKE '%Prova%' OR a.titulo LIKE '%Simulado%')
+  AND a.data_fim >= '2026-10-01 00:00:00'
+ORDER BY a.data_fim ASC, u.nome ASC;
+
+-- Total de respondidas vs pendentes por avaliação (dados para o gráfico)
+SELECT 
+    a.titulo AS avaliacao,
+    COUNT(CASE WHEN aa.data_realizacao IS NOT NULL THEN 1 END) AS total_respondidas,
+    COUNT(CASE WHEN aa.data_realizacao IS NULL THEN 1 END) AS total_pendentes
+FROM Avaliacao a
+INNER JOIN AvaliacaoAluno aa ON a.id_avaliacao = aa.id_avaliacao
+GROUP BY a.id_avaliacao, a.titulo
+ORDER BY a.id_avaliacao ASC;
+
+
+-- =============================================================================
+-- Relatório 3: Ranking de questões com mais erros
+-- Lista as questões com menor rendimento e compara com a média geral do sistema.
+-- =============================================================================
+SELECT 
+    q.id_questao,
+    q.tipo_questao,
+    SUBSTRING(q.enunciado FROM 1 FOR 65) || '...' AS enunciado_resumido,
+    COUNT(rq.id_aluno) AS total_respostas_avaliadas,
+    ROUND(AVG(rq.nota_obtida), 2) AS media_obtida,
+    ROUND(AVG(aq.valor_questao), 2) AS valor_referencia,
+    ROUND((AVG(rq.nota_obtida) / NULLIF(AVG(aq.valor_questao), 0)) * 100.0, 1) AS taxa_aproveitamento_pct,
+    (SELECT ROUND(AVG(nota_obtida), 2) FROM RespostaQuestao) AS media_global_sistema,
+    ROUND(
+        AVG(rq.nota_obtida) - (SELECT AVG(nota_obtida) FROM RespostaQuestao), 
+        2
+    ) AS diferenca_vs_media_global
+FROM Questao q
+INNER JOIN AvaliacaoQuestao aq ON q.id_questao = aq.id_questao
+INNER JOIN RespostaQuestao rq ON aq.id_avaliacao = rq.id_avaliacao AND aq.id_questao = rq.id_questao
+WHERE q.tipo_questao IN ('OBJETIVA', 'DISCURSIVA')
+GROUP BY q.id_questao, q.tipo_questao, q.enunciado
+ORDER BY taxa_aproveitamento_pct ASC, media_obtida ASC
+FETCH FIRST 10 ROWS ONLY;
