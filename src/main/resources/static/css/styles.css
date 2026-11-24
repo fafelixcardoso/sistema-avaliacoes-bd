@@ -1,0 +1,100 @@
+:root {
+    --cor-primaria: #0F4D2A;
+    --cor-secundaria: #1B5E20;
+    --cor-fundo: #F8FAFC;
+    --cor-card: #FFFFFF;
+    --cor-texto: #1E293B;
+    --cor-borda: #CBD5E1;
+    --cor-sucesso: #10B981;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+body { background: var(--cor-fundo); color: var(--cor-texto); line-height: 1.5; }
+.container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+
+/* Cabeçalho */
+header { background: var(--cor-primaria); color: white; padding: 1.1rem 0; }
+.header-content { display: flex; justify-content: space-between; align-items: center; }
+.header-content h1 { font-size: 1.35rem; }
+.header-content p { font-size: 0.85rem; opacity: 0.9; }
+.tag { background: rgba(255,255,255,0.2); padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+
+/* Navegação */
+.nav-bar { background: white; border-bottom: 1px solid var(--cor-borda); position: sticky; top: 0; z-index: 10; }
+.nav-container { display: flex; gap: 0.5rem; overflow-x: auto; }
+.nav-btn {
+    padding: 0.85rem 1.25rem; border: none; background: none; font-size: 0.9rem; font-weight: 600;
+    color: #64748B; cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap;
+}
+.nav-btn.active { color: var(--cor-primaria); border-bottom-color: var(--cor-primaria); }
+
+/* Conteúdo */
+main { margin: 1.5rem auto; }
+.aba-conteudo { display: none; }
+.aba-conteudo.active { display: block; }
+
+/* Cards */
+.card {
+    background: var(--cor-card); border: 1px solid var(--cor-borda); border-radius: 8px;
+    padding: 1.25rem; margin-bottom: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.card-title { margin-bottom: 1rem; border-bottom: 1px solid #E2E8F0; padding-bottom: 0.5rem; }
+.card-title h3 { color: var(--cor-primaria); font-size: 1.1rem; }
+.card-title small { color: #64748B; font-size: 0.8rem; }
+
+/* Tabelas */
+.table-wrap { overflow-x: auto; margin-top: 1rem; border: 1px solid #E2E8F0; border-radius: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+th { background: #F1F5F9; color: #475569; padding: 0.65rem 0.85rem; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
+td { padding: 0.65rem 0.85rem; border-top: 1px solid #E2E8F0; }
+tr:hover td { background: #F8FAFC; }
+
+/* Formulários */
+.form-group { margin-bottom: 1rem; }
+.form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; }
+input[type="text"], input[type="datetime-local"], select, textarea {
+    width: 100%; padding: 0.55rem; border: 1px solid var(--cor-borda); border-radius: 5px; font-size: 0.9rem;
+}
+.alt-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; }
+
+/* Checklist Boxes para Montar Avaliação */
+.checklist-box {
+    max-height: 220px; overflow-y: auto; border: 1px solid var(--cor-borda); border-radius: 6px;
+    padding: 0.5rem; background: #F8FAFC;
+}
+.checklist-item {
+    display: flex; align-items: center; justify-content: space-between; padding: 0.4rem 0.6rem;
+    background: white; border: 1px solid #E2E8F0; border-radius: 4px; margin-bottom: 0.35rem; font-size: 0.85rem;
+}
+.checklist-item label { margin-bottom: 0; font-weight: 500; cursor: pointer; flex-grow: 1; margin-left: 0.5rem; }
+.checklist-item input[type="number"] { width: 75px; padding: 0.3rem 0.4rem; margin-left: 0.5rem; }
+
+/* Botões */
+.btn {
+    display: inline-block; padding: 0.6rem 1.2rem; font-size: 0.9rem; font-weight: 600;
+    border-radius: 5px; border: none; cursor: pointer; color: white;
+}
+.btn-primary { background: var(--cor-primaria); }
+.btn-primary:hover { background: var(--cor-secundaria); }
+.btn-secondary { background: #E2E8F0; color: #1E293B; }
+.btn-secondary:hover { background: #CBD5E1; }
+
+/* Gráficos */
+.chart-container { position: relative; height: 260px; margin-top: 0.5rem; }
+.grid-relatorio-2 { display: grid; grid-template-columns: 1fr 1.5fr; gap: 1.25rem; align-items: center; }
+
+/* Questões na Realização de Prova */
+.q-box { border: 1px solid #E2E8F0; border-radius: 6px; padding: 1rem; margin-bottom: 1rem; background: #FAFDFB; }
+.q-box h5 { margin-bottom: 0.4rem; font-size: 0.95rem; color: var(--cor-primaria); }
+.q-option { display: block; padding: 0.35rem 0; cursor: pointer; font-size: 0.9rem; }
+
+/* Feedback */
+.alert-resultado {
+    background: #DCFCE7; border-left: 5px solid var(--cor-sucesso); padding: 1rem;
+    border-radius: 6px; margin-top: 1rem; font-size: 1rem; color: #065F46;
+}
+#toast {
+    display: none; position: fixed; bottom: 1.5rem; right: 1.5rem; background: #1E293B;
+    color: white; padding: 0.75rem 1.25rem; border-radius: 5px; font-size: 0.85rem; z-index: 100;
+}

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Avaliações de Aprendizagem</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div>
+                <h1>Sistema de Avaliações de Aprendizagem</h1>
+                <p>Universidade Estadual de Londrina — CCE</p>
+            </div>
+            <span class="tag">Banco de Dados I</span>
+        </div>
+    </header>
+
+    <nav class="nav-bar">
+        <div class="container nav-container">
+            <button class="nav-btn active" onclick="mudarAba('usuarios')">Usuários</button>
+            <button class="nav-btn" onclick="mudarAba('questoes')">Banco de Questões</button>
+            <button class="nav-btn" onclick="mudarAba('montar')">Montar Avaliação</button>
+            <button class="nav-btn" onclick="mudarAba('responder')">Realizar Avaliação</button>
+            <button class="nav-btn" onclick="mudarAba('relatorios')">Relatórios</button>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <section id="aba-usuarios" class="aba-conteudo active">
+            <div class="card">
+                <div class="card-title">
+                    <h3>Cadastrar Novo Usuário</h3>
+                    <small>Preencha os dados do estudante ou professor para liberar o acesso</small>
+                </div>
+
+                <form onsubmit="salvarUsuario(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nome Completo *</label>
+                            <input type="text" id="u-nome" required placeholder="Ex.: Lucas Gabriel Silva">
+                        </div>
+                        <div class="form-group">
+                            <label>E-mail Institucional *</label>
+                            <input type="text" id="u-email" required placeholder="Ex.: lucas.silva@uel.br">
+                        </div>
+                        <div class="form-group">
+                            <label>Perfil do Usuário *</label>
+                            <select id="u-tipo" required>
+                                <option value="ALUNO">Aluno</option>
+                                <option value="PROFESSOR">Professor</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar Usuário</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <h3>Pessoas Cadastradas</h3>
+                    <small>Lista de alunos e professores com cadastro ativo no sistema</small>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:60px;">ID</th>
+                                <th>Nome Completo</th>
+                                <th>E-mail</th>
+                                <th style="width:120px;">Perfil</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-usuarios-todos"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="aba-questoes" class="aba-conteudo">
+            <div class="card">
+                <div class="card-title">
+                    <h3>Cadastrar Nova Questão</h3>
+                    <small>Insira uma nova questão objetiva ou discursiva para compor avaliações</small>
+                </div>
+
+                <form onsubmit="salvarQuestao(event)">
+                    <div class="form-group">
+                        <label>Formato da Questão:</label>
+                        <select id="q-tipo" onchange="alternarTipoQuestao()">
+                            <option value="OBJETIVA">Objetiva (Múltipla Escolha)</option>
+                            <option value="DISCURSIVA">Discursiva</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Enunciado:</label>
+                        <textarea id="q-enunciado" required rows="3" placeholder="Digite o enunciado completo da questão..."></textarea>
+                    </div>
+
+                    <div id="bloco-alternativas">
+                        <label>Alternativas (Selecione a opção correta para o gabarito):</label>
+                        <div class="alt-row"><input type="radio" name="alt-c" value="A" checked> <strong>A)</strong> <input type="text" id="alt-A" required placeholder="Alternativa A"></div>
+                        <div class="alt-row"><input type="radio" name="alt-c" value="B"> <strong>B)</strong> <input type="text" id="alt-B" required placeholder="Alternativa B"></div>
+                        <div class="alt-row"><input type="radio" name="alt-c" value="C"> <strong>C)</strong> <input type="text" id="alt-C" required placeholder="Alternativa C"></div>
+                        <div class="alt-row"><input type="radio" name="alt-c" value="D"> <strong>D)</strong> <input type="text" id="alt-D" required placeholder="Alternativa D"></div>
+                    </div>
+
+                    <div id="bloco-discursiva" style="display:none;" class="form-group">
+                        <label>Gabarito / Resposta Esperada:</label>
+                        <textarea id="q-esperada" rows="2" placeholder="Critérios ou resposta esperada para correção..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Salvar Questão</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <h3>Acervo de Questões</h3>
+                    <small>Banco de questões disponíveis para uso nas avaliações</small>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:50px;">ID</th>
+                                <th style="width:100px;">Tipo</th>
+                                <th>Enunciado</th>
+                                <th>Gabarito / Alternativas</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-questoes-todas"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="aba-montar" class="aba-conteudo">
+            <div class="card">
+                <div class="card-title">
+                    <h3>Montar Nova Avaliação</h3>
+                    <small>Defina as informações da prova, selecione as questões e atribua aos alunos</small>
+                </div>
+
+                <form onsubmit="salvarNovaAvaliacao(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Título da Avaliação *</label>
+                            <input type="text" id="m-titulo" required placeholder="Ex.: Prova Bimestral de Banco de Dados">
+                        </div>
+                        <div class="form-group">
+                            <label>Professor Responsável *</label>
+                            <select id="m-professor" required></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descrição / Instruções:</label>
+                        <input type="text" id="m-descricao" placeholder="Instruções e orientações gerais para a prova...">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Data e Hora de Início *</label>
+                            <input type="datetime-local" id="m-inicio" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Data e Hora Limite (Prazo Final) *</label>
+                            <input type="datetime-local" id="m-fim" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Selecionar Questões e Definir Pontuação *</label>
+                        <small style="color:#64748B; display:block; margin-bottom:0.5rem;">
+                            Marque as questões que farão parte da prova e defina o valor em pontos de cada uma:
+                        </small>
+                        <div class="checklist-box" id="m-lista-questoes"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+                            <label style="margin-bottom:0;">Alunos Convocados *</label>
+                            <button type="button" class="btn btn-secondary" style="padding:0.25rem 0.6rem; font-size:0.75rem;" onclick="marcarTodosAlunos()">Marcar Todos</button>
+                        </div>
+                        <div class="checklist-box" id="m-lista-alunos"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Publicar Avaliação</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="aba-responder" class="aba-conteudo">
+            <div class="card">
+                <div class="card-title">
+                    <h3>Ambiente de Resolução de Prova</h3>
+                    <small>Selecione seu nome e a avaliação designada para responder às questões</small>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Identificação do Aluno:</label>
+                        <select id="sel-aluno"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Avaliação Disponível:</label>
+                        <select id="sel-avaliacao" onchange="carregarQuestoesDaProva()"></select>
+                    </div>
+                </div>
+
+                <div id="box-prova" style="display:none; margin-top: 1.5rem;">
+                    <h4 id="prova-titulo" style="color: var(--cor-primaria); margin-bottom: 1rem;"></h4>
+                    <form id="form-prova" onsubmit="enviarProva(event)">
+                        <div id="questoes-render"></div>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">
+                            Finalizar e Enviar Respostas
+                        </button>
+                    </form>
+                </div>
+
+                <div id="box-resultado" class="alert-resultado" style="display:none;"></div>
+            </div>
+        </section>
+
+        <section id="aba-relatorios" class="aba-conteudo">
+            
+            <div class="card">
+                <div class="card-title">
+                    <h3>Desempenho Geral e Médias por Avaliação</h3>
+                    <small>Média das notas da turma, quantidade de submissões e taxa de participação</small>
+                </div>
+                <div class="chart-container">
+                    <canvas id="chart-relatorio-1"></canvas>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Avaliação</th>
+                                <th>Professor Responsável</th>
+                                <th>Submissões</th>
+                                <th>Nota Média</th>
+                                <th>Maior Nota</th>
+                                <th>Menor Nota</th>
+                                <th>Taxa de Adesão</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-r1"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <h3>Alunos com Submissão Pendente</h3>
+                    <small>Estudantes convocados que ainda não concluíram a avaliação</small>
+                </div>
+                <div class="grid-relatorio-2">
+                    <div class="chart-container" style="height: 240px;">
+                        <canvas id="chart-relatorio-2"></canvas>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Avaliação</th>
+                                    <th>Prazo Limite</th>
+                                    <th>Aluno Pendente</th>
+                                    <th>E-mail</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-r2"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <h3>Ranking de Questões Mais Desafiadoras</h3>
+                    <small>Índice de aproveitamento por questão e comparativo com a média global</small>
+                </div>
+                <div class="chart-container">
+                    <canvas id="chart-relatorio-3"></canvas>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tipo</th>
+                                <th>Enunciado Resumido</th>
+                                <th>Avaliadas</th>
+                                <th>Média Obtida</th>
+                                <th>Aproveitamento (%)</th>
+                                <th>Média Global</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-r3"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="toast"></div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
