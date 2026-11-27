@@ -1,14 +1,10 @@
 <mxfile host="app.diagrams.net">
   <diagram name="DER - Sistema de Avaliações" id="DER_Sistema_Avaliacoes">
-    <mxGraphModel dx="1683" dy="904" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1150" math="0" shadow="0">
+    <mxGraphModel dx="1851" dy="999" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1150" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-
-        <!-- ======================================================== -->
-        <!-- 1. ENTIDADE FORTE: Avaliacao (Topo Central)               -->
-        <!-- ======================================================== -->
-        <mxCell id="ent_avaliacao" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#334155;fontColor=#ffffff;strokeColor=#1E293B;strokeWidth=1.5;fontSize=14;" value="&lt;b&gt;Avaliacao&lt;/b&gt;" vertex="1">
+        <mxCell id="ent_avaliacao" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#334155;fontColor=#ffffff;strokeColor=#1E293B;strokeWidth=1.5;fontSize=14;" value="&lt;b&gt;Avaliação&lt;/b&gt;" vertex="1">
           <mxGeometry height="60" width="140" x="730" y="220" as="geometry" />
         </mxCell>
         <mxCell id="att_aval_id" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#64748B;fontSize=11;fontColor=#0F172A;" value="&lt;u&gt;id_avaliacao&lt;/u&gt;" vertex="1">
@@ -41,11 +37,6 @@
         <mxCell id="edge_aval_fim" edge="1" parent="1" source="ent_avaliacao" style="endArrow=none;html=1;strokeColor=#94A3B8;" target="att_aval_fim">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
-        <!-- ======================================================== -->
-        <!-- 2. RELACIONAMENTO 1:N: Cria (Professor cria Avaliação)   -->
-        <!-- Trilha Superior Esquerda (sem cruzamento de linhas)      -->
-        <!-- ======================================================== -->
         <mxCell id="rel_cria" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#64748B;fontColor=#ffffff;strokeColor=#475569;strokeWidth=1.5;fontSize=12;" value="&lt;b&gt;Cria&lt;/b&gt;" vertex="1">
           <mxGeometry height="60" width="100" x="440" y="240" as="geometry" />
         </mxCell>
@@ -58,19 +49,22 @@
         <mxCell id="lbl_role_cria_user" connectable="0" parent="edge_user_cria" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#475569;fontStyle=2;" value="professor" vertex="1">
           <mxGeometry relative="1" x="-0.3" y="14" as="geometry" />
         </mxCell>
+        <mxCell id="c3rTo96CWM9gQx3EuFz_-2" connectable="0" parent="edge_user_cria" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=13;fontColor=#475569;fontStyle=2;" value="Participação (Atribuição)" vertex="1">
+          <mxGeometry relative="1" x="-0.3" y="14" as="geometry">
+            <mxPoint x="246" y="-117" as="offset" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="edge_cria_aval" edge="1" parent="1" source="rel_cria" style="endArrow=none;html=1;strokeColor=#334155;shape=link;width=3;" target="ent_avaliacao">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="lbl_card_cria_aval" connectable="0" parent="edge_cria_aval" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=13;fontColor=#0F172A;fontStyle=1;" value="N" vertex="1">
           <mxGeometry relative="1" x="0.3" y="-12" as="geometry" />
         </mxCell>
-
-        <!-- ======================================================== -->
-        <!-- 3. RELACIONAMENTO N:M: Atribuição (Aluno faz Avaliação)  -->
-        <!-- Trilha Intermediária Esquerda                            -->
-        <!-- ======================================================== -->
+        <mxCell id="agg_atrib" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#475569;strokeWidth=2;dashed=1;dashPattern=8 4;" value="" vertex="1">
+          <mxGeometry height="165" width="280" x="428" y="393" as="geometry" />
+        </mxCell>
         <mxCell id="rel_atrib" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#64748B;fontColor=#ffffff;strokeColor=#475569;strokeWidth=1.5;fontSize=12;" value="&lt;b&gt;Atribuição&lt;/b&gt;" vertex="1">
-          <mxGeometry height="60" width="110" x="460" y="410" as="geometry" />
+          <mxGeometry height="60" width="110" x="570" y="410" as="geometry" />
         </mxCell>
         <mxCell id="edge_user_atrib" edge="1" parent="1" source="ent_usuario" style="endArrow=none;html=1;strokeColor=#475569;strokeWidth=1.5;" target="rel_atrib">
           <mxGeometry relative="1" as="geometry" />
@@ -88,22 +82,18 @@
           <mxGeometry relative="1" x="0.3" y="-12" as="geometry" />
         </mxCell>
         <mxCell id="att_atrib_data" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#475569;fontSize=11;fontColor=#0F172A;" value="data_realizacao" vertex="1">
-          <mxGeometry height="40" width="100" x="335" y="460" as="geometry" />
+          <mxGeometry height="40" width="100" x="445" y="460" as="geometry" />
         </mxCell>
         <mxCell id="edge_atrib_data" edge="1" parent="1" source="rel_atrib" style="endArrow=none;html=1;strokeColor=#64748B;" target="att_atrib_data">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="att_atrib_nota" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#475569;strokeWidth=1.5;fontSize=11;fontColor=#0F172A;" value="&lt;b&gt;nota_total&lt;/b&gt;" vertex="1">
-          <mxGeometry height="40" width="90" x="435" y="500" as="geometry" />
+        <mxCell id="att_atrib_nota" parent="1" style="ellipse;whiteSpace=wrap;html=1;dashed=1;fillColor=#F1F5F9;strokeColor=#475569;strokeWidth=1.5;fontSize=11;fontColor=#0F172A;" value="&lt;b&gt;nota_total&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="90" x="545" y="500" as="geometry" />
         </mxCell>
         <mxCell id="edge_atrib_nota" edge="1" parent="1" source="rel_atrib" style="endArrow=none;html=1;strokeColor=#64748B;" target="att_atrib_nota">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
-        <!-- ======================================================== -->
-        <!-- 4. ENTIDADE FORTE: Usuario (Base Esquerda)                -->
-        <!-- ======================================================== -->
-        <mxCell id="ent_usuario" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#334155;fontColor=#ffffff;strokeColor=#1E293B;strokeWidth=1.5;fontSize=14;" value="&lt;b&gt;Usuario&lt;/b&gt;" vertex="1">
+        <mxCell id="ent_usuario" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#334155;fontColor=#ffffff;strokeColor=#1E293B;strokeWidth=1.5;fontSize=14;" value="&lt;b&gt;Usuário&lt;/b&gt;" vertex="1">
           <mxGeometry height="60" width="130" x="175" y="620" as="geometry" />
         </mxCell>
         <mxCell id="att_user_id" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#64748B;fontSize=11;fontColor=#0F172A;" value="&lt;u&gt;id_usuario&lt;/u&gt;" vertex="1">
@@ -130,58 +120,41 @@
         <mxCell id="edge_user_tipo" edge="1" parent="1" source="ent_usuario" style="endArrow=none;html=1;strokeColor=#94A3B8;" target="att_user_tipo">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
-        <!-- ======================================================== -->
-        <!-- 5. RELACIONAMENTO TERNÁRIO: Resposta (Centro do Triângulo)-->
-        <!-- Conecta Usuario, Avaliacao e Questao de forma direta     -->
-        <!-- ======================================================== -->
-        <mxCell id="rel_resposta" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#64748B;fontColor=#ffffff;strokeColor=#475569;strokeWidth=1.5;fontSize=12;" value="&lt;b&gt;Resposta&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot; color=&quot;#E2E8F0&quot;&gt;(Ternário)&lt;/font&gt;" vertex="1">
-          <mxGeometry height="65" width="110" x="745" y="480" as="geometry" />
+        <mxCell id="rel_resposta" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#64748B;fontColor=#ffffff;strokeColor=#475569;strokeWidth=1.5;fontSize=12;" value="&lt;b&gt;Resposta&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot; color=&quot;#E2E8F0&quot;&gt;(sobre Atribuição)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="65" width="110" x="820" y="480" as="geometry" />
         </mxCell>
-        <mxCell id="edge_resp_aval" edge="1" parent="1" source="rel_resposta" style="endArrow=none;html=1;strokeColor=#475569;strokeWidth=1.5;" target="ent_avaliacao">
+        <mxCell id="edge_resp_agg" edge="1" parent="1" source="rel_resposta" style="endArrow=none;html=1;strokeColor=#475569;strokeWidth=1.5;" target="agg_atrib">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="lbl_card_resp_aval" connectable="0" parent="edge_resp_aval" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=13;fontColor=#0F172A;fontStyle=1;" value="M" vertex="1">
-          <mxGeometry relative="1" x="0.3" y="-12" as="geometry" />
-        </mxCell>
-        <mxCell id="edge_resp_user" edge="1" parent="1" source="rel_resposta" style="endArrow=none;html=1;strokeColor=#475569;strokeWidth=1.5;" target="ent_usuario">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="lbl_card_resp_user" connectable="0" parent="edge_resp_user" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=13;fontColor=#0F172A;fontStyle=1;" value="N" vertex="1">
-          <mxGeometry relative="1" x="0.4" y="10" as="geometry" />
-        </mxCell>
-        <mxCell id="lbl_role_resp_user" connectable="0" parent="edge_resp_user" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#475569;fontStyle=2;" value="aluno" vertex="1">
-          <mxGeometry relative="1" x="0.4" y="-12" as="geometry" />
+        <mxCell id="lbl_card_resp_agg" connectable="0" parent="edge_resp_agg" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=13;fontColor=#0F172A;fontStyle=1;" value="N" vertex="1">
+          <mxGeometry relative="1" x="0.4" y="-12" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="edge_resp_quest" edge="1" parent="1" source="rel_resposta" style="endArrow=none;html=1;strokeColor=#475569;strokeWidth=1.5;" target="ent_questao">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="lbl_card_resp_quest" connectable="0" parent="edge_resp_quest" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=13;fontColor=#0F172A;fontStyle=1;" value="P" vertex="1">
+        <mxCell id="lbl_card_resp_quest" connectable="0" parent="edge_resp_quest" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=13;fontColor=#0F172A;fontStyle=1;" value="M" vertex="1">
           <mxGeometry relative="1" x="0.4" y="-12" as="geometry" />
         </mxCell>
         <mxCell id="att_resp_letra" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#475569;fontSize=11;fontColor=#0F172A;" value="letra_escolhida" vertex="1">
-          <mxGeometry height="40" width="95" x="640" y="590" as="geometry" />
+          <mxGeometry height="40" width="95" x="715" y="590" as="geometry" />
         </mxCell>
         <mxCell id="edge_resp_letra" edge="1" parent="1" source="rel_resposta" style="endArrow=none;html=1;strokeColor=#64748B;" target="att_resp_letra">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="att_resp_texto" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#475569;fontSize=11;fontColor=#0F172A;" value="texto_resposta" vertex="1">
-          <mxGeometry height="40" width="95" x="750" y="600" as="geometry" />
+          <mxGeometry height="40" width="95" x="825" y="600" as="geometry" />
         </mxCell>
         <mxCell id="edge_resp_texto" edge="1" parent="1" source="rel_resposta" style="endArrow=none;html=1;strokeColor=#64748B;" target="att_resp_texto">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="att_resp_nota" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#475569;strokeWidth=1.5;fontSize=11;fontColor=#0F172A;" value="&lt;b&gt;nota_obtida&lt;/b&gt;" vertex="1">
-          <mxGeometry height="40" width="90" x="860" y="590" as="geometry" />
+          <mxGeometry height="40" width="90" x="935" y="590" as="geometry" />
         </mxCell>
         <mxCell id="edge_resp_nota" edge="1" parent="1" source="rel_resposta" style="endArrow=none;html=1;strokeColor=#64748B;" target="att_resp_nota">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
-        <!-- ======================================================== -->
-        <!-- 6. RELACIONAMENTO N:M: Composição (Avaliacao x Questao)  -->
-        <!-- Trilha Superior Direita                                  -->
-        <!-- ======================================================== -->
         <mxCell id="rel_comp" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#64748B;fontColor=#ffffff;strokeColor=#475569;strokeWidth=1.5;fontSize=12;" value="&lt;b&gt;Composição&lt;/b&gt;" vertex="1">
           <mxGeometry height="60" width="110" x="1020" y="340" as="geometry" />
         </mxCell>
@@ -209,11 +182,7 @@
         <mxCell id="edge_comp_valor" edge="1" parent="1" source="rel_comp" style="endArrow=none;html=1;strokeColor=#64748B;" target="att_comp_valor">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
-        <!-- ======================================================== -->
-        <!-- 7. ENTIDADE FORTE: Questao (Base Direita)                 -->
-        <!-- ======================================================== -->
-        <mxCell id="ent_questao" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#334155;fontColor=#ffffff;strokeColor=#1E293B;strokeWidth=1.5;fontSize=14;" value="&lt;b&gt;Questao&lt;/b&gt;" vertex="1">
+        <mxCell id="ent_questao" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#334155;fontColor=#ffffff;strokeColor=#1E293B;strokeWidth=1.5;fontSize=14;" value="&lt;b&gt;Questão&lt;/b&gt;" vertex="1">
           <mxGeometry height="60" width="130" x="1135" y="620" as="geometry" />
         </mxCell>
         <mxCell id="att_quest_id" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#64748B;fontSize=11;fontColor=#0F172A;" value="&lt;u&gt;id_questao&lt;/u&gt;" vertex="1">
@@ -240,11 +209,6 @@
         <mxCell id="edge_quest_resp_esp" edge="1" parent="1" source="ent_questao" style="endArrow=none;html=1;strokeColor=#94A3B8;" target="att_quest_resp_esp">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
-        <!-- ======================================================== -->
-        <!-- 8. RELACIONAMENTO IDENTIFICADOR: Possui (Questao x Alt)  -->
-        <!-- Trilha Vertical Inferior Direita                         -->
-        <!-- ======================================================== -->
         <mxCell id="rel_possui" parent="1" style="shape=rhombus;double=1;whiteSpace=wrap;html=1;fillColor=#64748B;fontColor=#ffffff;strokeColor=#0F172A;strokeWidth=2;fontSize=12;" value="&lt;b&gt;Possui&lt;/b&gt;" vertex="1">
           <mxGeometry height="60" width="100" x="1150" y="760" as="geometry" />
         </mxCell>
@@ -254,10 +218,6 @@
         <mxCell id="lbl_card_possui_quest" connectable="0" parent="edge_quest_possui" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=13;fontColor=#0F172A;fontStyle=1;" value="1" vertex="1">
           <mxGeometry relative="1" x="-0.3" y="-12" as="geometry" />
         </mxCell>
-
-        <!-- ======================================================== -->
-        <!-- 9. ENTIDADE FRACA: Alternativa                            -->
-        <!-- ======================================================== -->
         <mxCell id="ent_alternativa" parent="1" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#475569;fontColor=#ffffff;strokeColor=#0F172A;strokeWidth=2.5;fontSize=14;" value="&lt;b&gt;Alternativa&lt;/b&gt;" vertex="1">
           <mxGeometry height="65" width="140" x="1130" y="890" as="geometry" />
         </mxCell>
@@ -285,7 +245,6 @@
         <mxCell id="edge_alt_correta" edge="1" parent="1" source="ent_alternativa" style="endArrow=none;html=1;strokeColor=#94A3B8;" target="att_alt_correta">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
       </root>
     </mxGraphModel>
   </diagram>
